@@ -48,9 +48,22 @@ message.innerHTML =
   'We use cookies for improved functionality and analitycs. <button class="btn btn--close--cookie">Got it!</button>';
 
 header.prepend(message);
-header.append(message);
+// header.append(message);
 document
   .querySelector('.btn--close--cookie')
   .addEventListener('click', function () {
     message.remove();
   });
+
+// Styles
+message.style.backgroundColor = '#37383d';
+message.style.width = '120%';
+
+console.log(getComputedStyle(message).height);
+message.style.height =
+  Number.parseFloat(getComputedStyle(message).height) + 30 + 'px';
+
+document.documentElement.style.setProperty('--color-primary', 'orangered');
+
+// Attributes
+const logo = document.querySelector('.nav__logo');
