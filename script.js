@@ -4,6 +4,8 @@ const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
 
 const nav = document.querySelector('.nav');
+const header = document.querySelector('.header');
+
 const tabs = document.querySelectorAll('.operations__tab');
 const tabsContainer = document.querySelector('.operations__tab-container');
 const tabsContent = document.querySelectorAll('.operations__content');
@@ -150,15 +152,15 @@ nav.addEventListener('mouseout', handleHover.bind(1));
 // };
 // const observer = new IntersectionObserver(obsCallback, obsObtions);
 // observer.observe(section1);
-const header = document.querySelector('.header');
+
 const navHeight = nav.getBoundingClientRect().height;
 
 const stickyNav = function (entries) {
   const [entry] = entries;
-  console.log(entry);
   if (!entry.isIntersecting) nav.classList.add('sticky');
   else nav.classList.remove('sticky');
 };
+
 const headerObserver = new IntersectionObserver(stickyNav, {
   root: null,
   treshold: 0,
@@ -166,6 +168,33 @@ const headerObserver = new IntersectionObserver(stickyNav, {
 });
 
 headerObserver.observe(header);
+
+/////////////////////////////////////////////////
+// Reaveal sections
+
+const allSections = document.querySelectorAll('section');
+
+const revealSection = function (entries, observer) {
+  const [entry] = entries;
+  console.log(entry);
+  if (!entry.isIntersecting) return;
+  entry.target.classList.remove('section--hidden');
+  observer.unobserve(entry.target);
+};
+
+const sectionObserver = new IntersectionObserver(revealSection, {
+  root: null,
+  treshold: 0.15,
+});
+
+allSections.forEach(function (section) {
+  sectionObserver.observe(section);
+  section.classList.add('section--hidden');
+});
+
+/////////////////////////////////////////////////
+// Lazy loading
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // Lectures
